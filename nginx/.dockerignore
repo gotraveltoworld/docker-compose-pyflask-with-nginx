@@ -1,0 +1,11 @@
+.git
+.ipynb_checkpoints/*
+/notebooks/*
+Dockerfile
+.DS_Store
+.gitignore
+README.md
+env.*
+__pycache__
+*.csv
+tmp

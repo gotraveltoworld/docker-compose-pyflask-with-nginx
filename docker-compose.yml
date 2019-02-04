@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+    nginx:
+        container_name: nginx-container
+        hostname: nginx-flask
+        build:
+          context: ./nginx
+          dockerfile: Dockerfile
+        restart: always
+        ports:
+          - "5000:80"
+        volumes:
+          - sock:/sock # Load the socket file from volumes.
+          - ./server_logs:/var/log/nginx
+        depends_on:
+          - flask
+
+    flask:
+        container_name: flask-container
+        hostname: flask
+        build:
+          context: ./flask
+          dockerfile: Dockerfile
+        restart: always
+        command: uwsgi --ini uwsgi.ini # Run the flask app by uwsgi.
+        volumes:
+          - sock:/sock # Share the socket file for Nginx.
+          - ./server_logs:/log
+          - ./flask/apis:/app
+        extra_hosts: # Extra IP, you can use your db's ip if you need it.
+          - "database:192.168.1.1"
+
+volumes:
+  sock:
