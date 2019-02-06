@@ -9,5 +9,6 @@ RUN mkdir -p /etc/nginx/sites-enabled/\
     && ln -s /etc/nginx/sites-available/my_nginx.conf /etc/nginx/sites-enabled/
 
 EXPOSE 443
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
